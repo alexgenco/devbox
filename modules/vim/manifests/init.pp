@@ -38,7 +38,6 @@ class vim {
   exec { "install vundle":
     path => "/usr/bin",
     user => "alex",
-    environment => "HOME=/home/alex",
     command => "git clone https://github.com/gmarik/Vundle.vim ${bundledir}/Vundle.vim",
     subscribe => File[$bundledir],
     refreshonly => true,
@@ -47,7 +46,6 @@ class vim {
   exec { "install plugins":
     path => "/usr/bin",
     user => "alex",
-    environment => "HOME=/home/alex",
     command => "vim +PluginInstall +qall",
     subscribe => File[$bundledir],
     refreshonly => true,
