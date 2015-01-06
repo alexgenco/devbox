@@ -1,5 +1,6 @@
 class vim {
-  $home      = "/home/alex"
+  include apt
+
   $vimrc     = "${home}/.vimrc"
   $viminfo   = "${home}/.viminfo"
   $vimdir    = "${home}/.vim"
@@ -7,6 +8,7 @@ class vim {
 
   package { "vim":
     ensure => latest,
+    require => Exec["apt-get update"],
   } ->
 
   file { $vimrc:
