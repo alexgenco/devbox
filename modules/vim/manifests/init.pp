@@ -16,7 +16,6 @@ class vim {
     owner => "alex",
     group => "alex",
     source => "puppet:///modules/vim/vimrc",
-    require => Package["vim"],
   } ->
 
   file { $viminfo:
