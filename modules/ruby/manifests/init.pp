@@ -9,6 +9,7 @@ class ruby {
     path => ["/bin", "/usr/bin", "/sbin", "/usr/sbin", "/usr/local/sbin"],
     command => "apt-get -y install build-essential libffi-dev libssl-dev zlib1g-dev libreadline-dev",
     require => Exec["apt-get update"],
+    refreshonly => true,
   } ->
 
   exec { "install rbenv":
@@ -33,5 +34,6 @@ class ruby {
     user => "alex",
     command => "rbenv-install 2.2.0",
     timeout => 0,
+    creates => "${rbenvdir}/versions/2.2.0/bin/ruby",
   }
 }
