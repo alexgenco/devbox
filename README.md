@@ -1,3 +1,4 @@
 ## Devbox
 
-puppet apply --modulepath=./modules manifests/base.pp
+sudo puppet apply --modulepath=./modules manifests/base.pp --noop
+sudo puppet apply --modulepath=./modules manifests/base.pp
