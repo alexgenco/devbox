@@ -1,0 +1,6 @@
+alias be='bundle exec'
+alias ta='tmux attach'
+alias g='git'
+
+# local aliases
+test -f ~/.bash_aliases.local && source ~/.bash_aliases.local
