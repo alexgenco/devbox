@@ -4,6 +4,7 @@ class ruby {
 
   $rbenvdir = "${home}/.rbenv"
   $repobase = "https://github.com/sstephenson"
+  $rubyvers = "2.2.0"
 
   exec { "install ruby deps":
     path => ["/bin", "/usr/bin", "/sbin", "/usr/sbin", "/usr/local/sbin"],
@@ -32,8 +33,23 @@ class ruby {
     path => ["/bin", "/usr/bin", "${rbenvdir}/plugins/ruby-build/bin", "${rbenvdir}/libexec"],
     environment => "RBENV_ROOT=${rbenvdir}",
     user => "alex",
-    command => "rbenv-install 2.2.0",
+    command => "rbenv-install ${rubyvers}",
     timeout => 0,
-    creates => "${rbenvdir}/versions/2.2.0/bin/ruby",
+    creates => "${rbenvdir}/versions/${rubyvers}/bin/ruby",
+  } ->
+
+  exec { "rbenv rehash":
+    path => ["/bin", "/usr/bin", "${rbenvdir}/libexec"],
+    environment => "RBENV_ROOT=${rbenvdir}",
+    user => "alex",
+    command => "rbenv-rehash",
+    refreshonly => true,
+  } ->
+
+  exec { "set global ruby":
+    path => ["/bin"],
+    user => "alex",
+    command => "echo ${rubyvers} > ${rbenvdir}/version",
+    creates => "${rbenvdir}/version",
   }
 }
