@@ -10,7 +10,6 @@ class ruby {
     path => ["/bin", "/usr/bin", "/sbin", "/usr/sbin", "/usr/local/sbin"],
     command => "apt-get -y install build-essential libffi-dev libssl-dev zlib1g-dev libreadline-dev",
     require => Exec["apt-get update"],
-    refreshonly => true,
   } ->
 
   exec { "install rbenv":
@@ -43,7 +42,6 @@ class ruby {
     environment => "RBENV_ROOT=${rbenvdir}",
     user => "alex",
     command => "rbenv-rehash",
-    refreshonly => true,
   } ->
 
   exec { "set global ruby":

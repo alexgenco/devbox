@@ -2,11 +2,6 @@
 
 set -e
 
-if [ "$EUID" -ne "0" ]; then
-  echo "This script must be run as root." >&2
-  exit 1
-fi
-
 echo "Initial apt-get update..."
 apt-get update >/dev/null
 
@@ -34,19 +29,14 @@ echo "Installing Puppet..."
 DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install puppet >/dev/null
 
 echo
-echo "Linking /etc/puppet to $PWD ..."
-
-ln -vfs /etc/puppet $PWD
-
-echo
 echo "Running puppet noop..."
 
-if puppet apply /etc/puppet/manifests/base.pp --noop; then
+if puppet apply --modulepath=./modules --config=./puppet.conf ./manifests/base.pp --noop; then
   echo
   read -p "Apply changes? (yes/no): " resp
 
   if [ "$resp" = "yes" ]; then
-    puppet apply ./manifests/base.pp
+    puppet apply --modulepath=./modules --config=./puppet.conf ./manifests/base.pp
   else
     echo
     echo "Not applying changes."

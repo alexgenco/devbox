@@ -41,7 +41,6 @@ class vim {
     path => "/usr/bin",
     user => "alex",
     command => "git clone https://github.com/gmarik/Vundle.vim ${bundledir}/Vundle.vim",
-    refreshonly => true,
     require => Package["git"],
   } ->
 
@@ -49,6 +48,5 @@ class vim {
     path => "/usr/bin",
     user => "alex",
     command => "vim +PluginInstall +qall",
-    refreshonly => true,
   }
 }
