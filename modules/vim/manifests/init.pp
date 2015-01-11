@@ -1,5 +1,6 @@
 class vim {
   include apt
+  include git
 
   $vimrc     = "${home}/.vimrc"
   $viminfo   = "${home}/.viminfo"
@@ -40,15 +41,14 @@ class vim {
     path => "/usr/bin",
     user => "alex",
     command => "git clone https://github.com/gmarik/Vundle.vim ${bundledir}/Vundle.vim",
-    subscribe => File[$bundledir],
     refreshonly => true,
+    require => Package["git"],
   } ->
 
   exec { "install plugins":
     path => "/usr/bin",
     user => "alex",
     command => "vim +PluginInstall +qall",
-    subscribe => File[$bundledir],
     refreshonly => true,
   }
 }
