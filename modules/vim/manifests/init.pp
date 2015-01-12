@@ -41,11 +41,13 @@ class vim {
     path => "/usr/bin",
     user => "alex",
     command => "git clone https://github.com/gmarik/Vundle.vim ${bundledir}/Vundle.vim",
+    creates => "${bundledir}/Vundle.vim",
     require => Package["git"],
   } ->
 
   exec { "install plugins":
     path => "/usr/bin",
+    environment => "HOME=${home}",
     user => "alex",
     command => "vim +PluginInstall +qall",
   }
