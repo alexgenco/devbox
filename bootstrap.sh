@@ -31,12 +31,12 @@ DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -
 echo
 echo "Running puppet noop..."
 
-if puppet apply --modulepath=./modules --config=./puppet.conf ./manifests/base.pp --noop; then
+if puppet apply --verbose --modulepath=./modules --config=./puppet.conf ./manifests/base.pp --noop; then
   echo
   read -p "Apply changes? (yes/no): " resp
 
   if [ "$resp" = "yes" ]; then
-    puppet apply --modulepath=./modules --config=./puppet.conf ./manifests/base.pp
+    puppet apply --verbose --modulepath=./modules --config=./puppet.conf ./manifests/base.pp
   else
     echo
     echo "Not applying changes."
