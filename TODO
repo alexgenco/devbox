@@ -1,0 +1,3 @@
+- `adduser dev` (instead of alex)
+- disable root login
+- use non-standard ssh port
