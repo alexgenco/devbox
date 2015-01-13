@@ -11,22 +11,18 @@ DISTRIB_CODENAME=$(lsb_release -c -s)
 REPO_DEB_URL="http://apt.puppetlabs.com/puppetlabs-release-${DISTRIB_CODENAME}.deb"
 
 echo "Installing wget..."
-
 apt-get install -y wget >/dev/null
 
 echo "Configuring PuppetLabs repo..."
-
 repo_deb_path=$(mktemp)
 wget --output-document="${repo_deb_path}" "${REPO_DEB_URL}" 2>/dev/null
 dpkg -i "${repo_deb_path}" >/dev/null
 apt-get update >/dev/null
 
 echo "Installing Puppet..."
-
 DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install puppet >/dev/null
 
 echo "Running puppet noop..."
-
 if puppet apply --verbose --modulepath=./modules --config=./puppet.conf ./manifests/base.pp --noop; then
   read -p "
 Apply changes? (yes/no): " resp
