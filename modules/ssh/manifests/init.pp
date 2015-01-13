@@ -8,9 +8,8 @@ class ssh {
     source => "puppet:///modules/ssh/sshd_config",
   } ->
 
-  exec { "restart ssh":
-    path => ["/usr/bin", "/usr/sbin"],
-    user => "root",
-    command => "service ssh restart",
+  service { "ssh":
+    ensure => running,
+    subscribe => File[$sshd_config],
   }
 }
