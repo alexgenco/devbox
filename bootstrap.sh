@@ -1,34 +1,33 @@
-#!/usr/bin/env sh
-
+#!/bin/sh
 set -e
 
 echo "Initial apt-get update..."
 apt-get update >/dev/null
 
-which lsb_release || apt-get install -y lsb-release
-
-DISTRIB_CODENAME=$(lsb_release -c -s)
-REPO_DEB_URL="http://apt.puppetlabs.com/puppetlabs-release-${DISTRIB_CODENAME}.deb"
-
 echo "Installing wget..."
 apt-get install -y wget >/dev/null
 
 echo "Configuring PuppetLabs repo..."
-repo_deb_path=$(mktemp)
-wget --output-document="${repo_deb_path}" "${REPO_DEB_URL}" 2>/dev/null
-dpkg -i "${repo_deb_path}" >/dev/null
+which lsb_release || apt-get install -y lsb-release
+DISTRIB_CODENAME=$(lsb_release -c -s)
+REPO_DEB_URL="http://apt.puppetlabs.com/puppetlabs-release-${DISTRIB_CODENAME}.deb"
+REPO_DEB_PATH=$(mktemp)
+wget --output-document="${REPO_DEB_PATH}" "${REPO_DEB_URL}" 2>/dev/null
+dpkg -i "${REPO_DEB_PATH}" >/dev/null
 apt-get update >/dev/null
 
 echo "Installing Puppet..."
 DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install puppet >/dev/null
 
 echo "Running puppet noop..."
-if puppet apply --verbose --modulepath=./modules --config=./puppet.conf ./manifests/base.pp --noop; then
+APPLY_CMD="puppet apply --verbose --modulepath=./modules --config=./puppet.conf ./manifests/base.pp"
+
+if $APPLY_CMD --noop; then
   read -p "
 Apply changes? (yes/no): " resp
 
   if [ "$resp" = "yes" ]; then
-    puppet apply --verbose --modulepath=./modules --config=./puppet.conf ./manifests/base.pp
+    $APPLY_CMD
   else
     echo "Not applying changes."
     exit 1
