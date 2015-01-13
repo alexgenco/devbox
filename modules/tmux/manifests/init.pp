@@ -1,12 +1,7 @@
 class tmux {
-  include apt
-
   $tmuxconf = "${home}/.tmux.conf"
 
-  package { "tmux":
-    ensure => latest,
-    require => Exec["apt-get update"],
-  } ->
+  package { "tmux": ensure => latest } ->
 
   file { $tmuxconf:
     ensure => present,

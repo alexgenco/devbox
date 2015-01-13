@@ -6,4 +6,4 @@ include git
 include vim
 include tmux
 include bash
-include rbenv
+include ruby

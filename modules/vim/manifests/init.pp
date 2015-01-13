@@ -1,5 +1,4 @@
 class vim {
-  include apt
   include git
 
   $vimrc     = "${home}/.vimrc"
@@ -7,10 +6,7 @@ class vim {
   $vimdir    = "${home}/.vim"
   $bundledir = "${vimdir}/bundle"
 
-  package { "vim":
-    ensure => latest,
-    require => Exec["apt-get update"],
-  } ->
+  package { "vim": ensure => latest } ->
 
   file { $vimrc:
     ensure => present,

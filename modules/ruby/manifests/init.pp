@@ -1,15 +1,14 @@
-class rbenv {
+class ruby {
   include git
-  include apt
 
   $rbenvdir = "${home}/.rbenv"
   $repobase = "https://github.com/sstephenson"
 
-  exec { "install ruby deps":
-    path => ["/bin", "/usr/bin", "/sbin", "/usr/sbin", "/usr/local/sbin"],
-    command => "apt-get -y install build-essential libffi-dev libssl-dev zlib1g-dev libreadline-dev",
-    require => Exec["apt-get update"],
-  } ->
+  package { "build-essential": ensure => latest } ->
+  package { "libreadline-dev": ensure => latest } ->
+  package { "libffi-dev":      ensure => latest } ->
+  package { "libssl-dev":      ensure => latest } ->
+  package { "zlib1g-dev":      ensure => latest } ->
 
   exec { "install rbenv":
     path => "/usr/bin",

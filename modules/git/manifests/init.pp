@@ -1,12 +1,9 @@
 class git {
-  include apt
-
   $gitconfig     = "${home}/.gitconfig"
   $gitcompletion = "${home}/.git-completion"
 
   package { "git":
     ensure => latest,
-    require => Exec["apt-get update"],
   }
 
   file { $gitconfig:
