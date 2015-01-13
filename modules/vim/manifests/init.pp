@@ -40,6 +40,7 @@ class vim {
   exec { "install vundle":
     path => "/usr/bin",
     user => "alex",
+    cwd => $home,
     command => "git clone https://github.com/gmarik/Vundle.vim ${bundledir}/Vundle.vim",
     creates => "${bundledir}/Vundle.vim",
     require => Package["git"],
