@@ -1,5 +1,5 @@
-$username || fail("Must set FACTER_username")
-$userpass || fail("Must set FACTER_userpass")
+if $username == undef { fail("Must set FACTER_username") }
+if $userpass == undef { fail("Must set FACTER_userpass") }
 $home = "/home/$username"
 
 include user
