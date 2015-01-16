@@ -1,4 +1,5 @@
 Devbox
 ======
 
-sudo ./bootstrap.sh
+As root:
+$ ./bootstrap.sh
