@@ -1,4 +1,6 @@
-$home = "/home/alex"
+$username || fail("Must set FACTER_username")
+$userpass || fail("Must set FACTER_userpass")
+$home = "/home/$username"
 
 include user
 include ssh

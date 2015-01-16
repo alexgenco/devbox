@@ -19,6 +19,10 @@ apt-get update >/dev/null
 echo "Installing Puppet..."
 DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install puppet >/dev/null
 
+read -p "User: " FACTER_username
+export FACTER_username
+export FACTER_userpass=$(mkpasswd -m sha-512)
+
 echo "Running puppet noop..."
 APPLY_CMD="puppet apply --verbose --modulepath=./modules --config=./puppet.conf ./manifests/base.pp"
 
