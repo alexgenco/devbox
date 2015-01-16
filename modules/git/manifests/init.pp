@@ -8,15 +8,15 @@ class git {
 
   file { $gitconfig:
     ensure => present,
-    owner => "alex",
-    group => "alex",
+    owner => $username,
+    group => $username,
     source => "puppet:///modules/git/gitconfig",
   }
 
   file { $gitcompletion:
     ensure => present,
-    owner => "alex",
-    group => "alex",
+    owner => $username,
+    group => $username,
     source => "puppet:///modules/git/git-completion",
   }
 }

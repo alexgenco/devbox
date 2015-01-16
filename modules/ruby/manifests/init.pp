@@ -12,7 +12,7 @@ class ruby {
 
   exec { "install rbenv":
     path => "/usr/bin",
-    user => "alex",
+    user => $username,
     cwd => $home,
     command => "git clone ${repobase}/rbenv.git ${rbenvdir}",
     creates => $rbenvdir,
@@ -21,7 +21,7 @@ class ruby {
 
   exec { "install ruby-build":
     path => "/usr/bin",
-    user => "alex",
+    user => $username,
     cwd => $home,
     command => "git clone ${repobase}/ruby-build.git ${rbenvdir}/plugins/ruby-build",
     creates => "${rbenvdir}/plugins/ruby-build",

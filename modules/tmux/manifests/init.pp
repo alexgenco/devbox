@@ -5,8 +5,8 @@ class tmux {
 
   file { $tmuxconf:
     ensure => present,
-    owner => "alex",
-    group => "alex",
+    owner => $username,
+    group => $username,
     source => "puppet:///modules/tmux/tmux.conf",
   }
 }

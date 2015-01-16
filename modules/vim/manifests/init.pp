@@ -10,32 +10,32 @@ class vim {
 
   file { $vimrc:
     ensure => present,
-    owner => "alex",
-    group => "alex",
+    owner => $username,
+    group => $username,
     source => "puppet:///modules/vim/vimrc",
   } ->
 
   file { $viminfo:
     ensure => present,
-    owner => "alex",
-    group => "alex",
+    owner => $username,
+    group => $username,
   } ->
 
   file { $vimdir:
     ensure => directory,
-    owner => "alex",
-    group => "alex",
+    owner => $username,
+    group => $username,
   } ->
 
   file { $bundledir:
     ensure => directory,
-    owner => "alex",
-    group => "alex",
+    owner => $username,
+    group => $username,
   } ->
 
   exec { "install vundle":
     path => "/usr/bin",
-    user => "alex",
+    user => $username,
     cwd => $home,
     command => "git clone https://github.com/gmarik/Vundle.vim ${bundledir}/Vundle.vim",
     creates => "${bundledir}/Vundle.vim",
@@ -45,7 +45,7 @@ class vim {
   exec { "install plugins":
     path => "/usr/bin",
     environment => "HOME=${home}",
-    user => "alex",
+    user => $username,
     command => "vim +PluginInstall +qall",
   }
 }
