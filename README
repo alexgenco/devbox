@@ -2,4 +2,4 @@ Devbox
 ======
 
 As root:
-$ ./bootstrap.sh
+$ ./bootstrap

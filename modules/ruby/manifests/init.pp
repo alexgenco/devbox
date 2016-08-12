@@ -1,5 +1,5 @@
 class ruby {
-  include git
+  require git
 
   $rbenvdir = "${home}/.rbenv"
   $repobase = "https://github.com/sstephenson"
@@ -16,7 +16,6 @@ class ruby {
     cwd => $home,
     command => "git clone ${repobase}/rbenv.git ${rbenvdir}",
     creates => $rbenvdir,
-    require => Package["git"],
   } ->
 
   exec { "install ruby-build":
@@ -25,6 +24,12 @@ class ruby {
     cwd => $home,
     command => "git clone ${repobase}/ruby-build.git ${rbenvdir}/plugins/ruby-build",
     creates => "${rbenvdir}/plugins/ruby-build",
-    require => Package["git"],
+  } ->
+
+  exec { "install bundler":
+    path => "/usr/bin",
+    user => "root",
+    cwd => $home,
+    command => "gem install bundler",
   }
 }
