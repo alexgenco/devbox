@@ -1,6 +1,12 @@
 #!/bin/bash
 set -e
 
+branch="${BRANCH:-master}"
+
+curl -OL https://github.com/alexgenco/devbox/archive/$branch.tar.gz
+tar -xf $branch.tar.gz
+cd devbox-$branch
+
 echo "Initial apt-get update..."
 apt-get update >/dev/null
 

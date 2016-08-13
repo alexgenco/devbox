@@ -1,5 +1,4 @@
 Devbox
 ======
 
-As root:
-$ ./bootstrap
+bash -c "$(curl -L https://raw.githubusercontent.com/alexgenco/devbox/master/bootstrap.sh)"
