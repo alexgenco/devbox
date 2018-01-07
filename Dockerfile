@@ -24,15 +24,15 @@ RUN apt-get install -q -y \
       wget \
       zlib1g-dev
 
-# Install go
-RUN wget --quiet -P /usr/local/ https://dl.google.com/go/go1.9.2.linux-amd64.tar.gz
-RUN tar -C /usr/local -xzf /usr/local/go1.9.2.linux-amd64.tar.gz
-
 # Set the locale
 RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && locale-gen
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
+
+# Install go
+RUN wget --quiet -P /usr/local/ https://dl.google.com/go/go1.9.2.linux-amd64.tar.gz
+RUN tar -C /usr/local -xzf /usr/local/go1.9.2.linux-amd64.tar.gz
 
 # Add dev user
 RUN useradd --create-home --shell /bin/bash dev
