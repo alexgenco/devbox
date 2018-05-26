@@ -19,6 +19,7 @@ RUN apt-get install -q -y \
       locales \
       man \
       stow \
+      sudo \
       tmux \
       vim \
       wget \
@@ -36,6 +37,7 @@ RUN tar -C /usr/local -xzf /usr/local/go1.9.2.linux-amd64.tar.gz
 
 # Add dev user
 RUN useradd --create-home --shell /bin/bash dev
+RUN adduser dev sudo
 USER dev
 WORKDIR /home/dev
 
