@@ -57,6 +57,7 @@ ENV PATH "${PATH}:/usr/local/go/bin:/home/dev/go/bin"
 
 # Install dotfiles
 RUN git clone https://github.com/alexgenco/dotfiles.git /home/dev/.dotfiles
-RUN bash -c "cd ~/.dotfiles && /home/dev/.rbenv/shims/rake install"
+RUN sh -c "cd ~/.dotfiles && /home/dev/.rbenv/shims/rake install"
+RUN sh -c "vim +qa! > /dev/null 2>&1"
 
 CMD "tmux"
