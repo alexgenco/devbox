@@ -15,7 +15,7 @@ fi
 name="${NAME:-devbox}"
 
 if [ "$(docker ps -qa --filter=name="$name")" ]; then
-  sh -xc "docker attach '$name'"
+  docker attach "$name"
 else
   volumes=""
 
@@ -25,6 +25,6 @@ else
     volumes="$volumes -v '$dirpath':'/home/dev/$basename'"
   done
 
-  sh -xc "docker pull alexgenco/devbox:latest"
-  sh -xc "docker run --detach-keys='ctrl-a,d' --rm --name='$name' $volumes -it alexgenco/devbox:latest"
+  docker pull alexgenco/devbox:latest
+  docker run --detach-keys="ctrl-a,d" --rm --name="$name" $volumes -it alexgenco/devbox:latest
 fi

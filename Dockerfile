@@ -34,7 +34,7 @@ ENV LC_ALL en_US.UTF-8
 # Add dev user
 RUN useradd --create-home --shell /bin/bash dev
 RUN adduser dev sudo
-RUN sh -c "echo dev:dev | chpasswd"
+RUN echo dev:dev | chpasswd
 
 # Install dotfiles
 RUN git clone https://github.com/alexgenco/dotfiles.git /home/dev/.dotfiles
@@ -45,4 +45,4 @@ USER dev
 WORKDIR /home/dev
 RUN ~/.rbenv/bin/rbenv global 2.5.1
 
-CMD "tmux"
+ENTRYPOINT tmux
