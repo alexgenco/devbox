@@ -8,7 +8,6 @@ RUN apt-get install -q -y \
       build-essential \
       curl \
       git-core \
-      golang-1.7 \
       libffi-dev \
       libgdbm-dev \
       libgdbm3 \
@@ -18,6 +17,7 @@ RUN apt-get install -q -y \
       libyaml-dev \
       locales \
       man \
+      ruby \
       stow \
       sudo \
       tmux \
@@ -31,35 +31,18 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
-# Install go
-RUN wget --quiet -P /usr/local/ https://dl.google.com/go/go1.9.2.linux-amd64.tar.gz
-RUN tar -C /usr/local -xzf /usr/local/go1.9.2.linux-amd64.tar.gz
-
 # Add dev user
 RUN useradd --create-home --shell /bin/bash dev
 RUN adduser dev sudo
 RUN sh -c "echo dev:dev | chpasswd"
-USER dev
-WORKDIR /home/dev
-
-# Install rbenv
-RUN git clone https://github.com/sstephenson/rbenv.git /home/dev/.rbenv
-RUN git clone https://github.com/sstephenson/ruby-build.git /home/dev/.rbenv/plugins/ruby-build
-
-# Install ruby
-ENV PATH $PATH:/home/dev/.rbenv/bin
-RUN rbenv install -v 2.5.0
-RUN rbenv global 2.5.0
-RUN rbenv rehash
-RUN /home/dev/.rbenv/shims/gem install bundler --no-document
-RUN /home/dev/.rbenv/shims/gem install rake --no-document
-
-# Set go path
-ENV GOPATH /home/dev/go
-ENV PATH "${PATH}:/usr/local/go/bin:/home/dev/go/bin"
 
 # Install dotfiles
 RUN git clone https://github.com/alexgenco/dotfiles.git /home/dev/.dotfiles
-RUN sh -c "cd ~/.dotfiles && /home/dev/.rbenv/shims/rake install"
+RUN cd /home/dev/.dotfiles && HOME=/home/dev rake install
+RUN chown -R dev:dev /home/dev
+
+USER dev
+WORKDIR /home/dev
+RUN ~/.rbenv/bin/rbenv global 2.5.1
 
 CMD "tmux"
