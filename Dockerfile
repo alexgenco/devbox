@@ -36,8 +36,9 @@ RUN wget --quiet -P /usr/local/ https://dl.google.com/go/go1.9.2.linux-amd64.tar
 RUN tar -C /usr/local -xzf /usr/local/go1.9.2.linux-amd64.tar.gz
 
 # Add dev user
-RUN useradd --create-home --shell /bin/bash --password dev dev
+RUN useradd --create-home --shell /bin/bash dev
 RUN adduser dev sudo
+RUN sh -c "echo dev:dev | chpasswd"
 USER dev
 WORKDIR /home/dev
 
