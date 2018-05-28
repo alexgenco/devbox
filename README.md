@@ -11,3 +11,5 @@ docker run --name devbox --detach-keys 'ctrl-a,d' -it alexgenco/devbox
 # Rejoin a detached session
 docker attach --detach-keys 'ctrl-a,d' devbox
 ```
+
+See [example script](run.sh) for more ergonomic usage.
